@@ -16,10 +16,8 @@ module.exports = AtomDynamicMacro =
     @seq = []
     handler = (event) ->
       seq = AtomDynamicMacro.seq
-      tailIdentifier = if 0 < seq.length then seq[seq.length-1].keyIdentifier else ""
-      if tailIdentifier != event.keyIdentifier || !AtomDynamicMacro.modifierKey(event)
-        seq.push(event)
-        seq.shift() if seq.length > 100
+      seq.push(event)
+      seq.shift() if seq.length > 100
     document.addEventListener 'keydown', handler, true
 
   deactivate: ->
@@ -77,7 +75,5 @@ module.exports = AtomDynamicMacro =
             editor.insertText(" ")
           else
             atom.keymaps.simulateTextInput(key)
-      else if key.keyIdentifier == "Enter"
-        editor.insertText("\n")
       else
         atom.keymaps.handleKeyboardEvent(key)
